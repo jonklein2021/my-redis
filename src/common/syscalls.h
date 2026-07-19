@@ -1,3 +1,6 @@
+#ifndef SYSCALLS_H
+#define SYSCALLS_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -83,3 +86,5 @@ static inline int Close(int __fd) {
   }
   return rv;
 }
+
+#endif
