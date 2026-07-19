@@ -1,35 +1,27 @@
+#include "../common/syscalls.h"
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
 #include <unistd.h>
 
 int main(void) {
-  int fd = socket(AF_INET, SOCK_STREAM, 0);
-  if (fd < 0) {
-    fprintf(stderr, "Error: socket()\n");
-  }
+  int fd = Socket(AF_INET, SOCK_STREAM, 0);
 
   struct sockaddr_in addr;
   addr.sin_family = AF_INET;
   addr.sin_port = ntohs(1234);
   addr.sin_addr.s_addr = ntohl(INADDR_LOOPBACK); // 127.0.0.1
-  int rv = connect(fd, (const struct sockaddr *)&addr, sizeof(addr));
-  if (rv) {
-    fprintf(stderr, "Error: connect()\n");
-  }
+  Connect(fd, (const struct sockaddr *)&addr, sizeof(addr));
 
   char msg[] = "hello";
-  write(fd, msg, strlen(msg));
+  Write(fd, msg, strlen(msg));
 
   char rbuf[64];
-  ssize_t n = read(fd, rbuf, sizeof(rbuf) - 1);
-  if (n < 0) {
-    fprintf(stderr, "Error: read()\n");
-  }
+  Read(fd, rbuf, sizeof(rbuf) - 1);
   printf("server says: %s\n", rbuf);
-  close(fd);
+
+  Close(fd);
 
   return EXIT_SUCCESS;
 }
