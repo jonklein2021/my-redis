@@ -14,6 +14,7 @@ static inline int Socket(int __domain, int __type, int __protocol) {
   }
   return fd;
 }
+
 static inline int Setsockopt(int __fd, int __level, int __optname,
                              const void *__optval, socklen_t __optlen) {
   int rv = setsockopt(__fd, __level, __optname, __optval, __optlen);
